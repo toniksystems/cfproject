@@ -43,23 +43,25 @@ export const Navbar = () => {
       className={cn(
         'fixed w-full z-50 transition-all duration-300',
         isScrolled 
-          ? 'bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md shadow-md py-3' 
-          : 'bg-transparent py-5'
+          ? 'bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-md py-3' 
+          : 'bg-transparent py-6'
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          {/* Logo */}
+          {/* Logo - Recreated to match the attached image */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-primary-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity" />
-              <div className="w-10 h-10 border-2 border-primary-600 rounded-full flex items-center justify-center bg-white dark:bg-neutral-900 z-10">
-                 <TrendingUp className="text-primary-600 w-5 h-5" />
-              </div>
+            <div className="relative w-10 h-10 flex items-center justify-center bg-white rounded-full border-2 border-primary-700 shadow-sm overflow-hidden">
+               {/* Mimicking the logo icon */}
+               <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 to-primary-700 opacity-10"></div>
+               <TrendingUp className="text-primary-700 w-6 h-6 relative z-10" strokeWidth={2.5} />
             </div>
-            <div className="flex flex-col">
-              <span className={cn("text-2xl font-bold font-display leading-none tracking-tight", isScrolled ? "text-slate-900 dark:text-white" : "text-slate-900 dark:text-white")}>
-                Channels<span className="font-sans font-semibold">FinTrust</span>
+            <div className="flex flex-col justify-center h-full">
+              <span className={cn(
+                "text-2xl leading-none tracking-tight font-display", 
+                isScrolled ? "text-slate-900 dark:text-white" : "text-white"
+              )}>
+                <span className="font-serif">Channels</span><span className="font-serif font-bold">FinTrust</span>
               </span>
             </div>
           </Link>
@@ -71,10 +73,10 @@ export const Navbar = () => {
                 key={link.name}
                 to={link.path}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary-600 dark:hover:text-primary-400",
+                  "text-sm font-medium transition-colors hover:text-primary-500",
                   location.pathname === link.path 
-                    ? "text-primary-600 dark:text-primary-400" 
-                    : "text-slate-700 dark:text-slate-300"
+                    ? "text-primary-500" 
+                    : isScrolled ? "text-slate-700 dark:text-slate-300" : "text-slate-200 hover:text-white"
                 )}
               >
                 {link.name}
@@ -83,13 +85,18 @@ export const Navbar = () => {
             
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors text-slate-700 dark:text-slate-300"
+              className={cn(
+                "p-2 rounded-full transition-colors",
+                isScrolled 
+                  ? "hover:bg-slate-100 dark:hover:bg-neutral-800 text-slate-700 dark:text-slate-300" 
+                  : "hover:bg-white/10 text-slate-200"
+              )}
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
             <Link to="/login">
-              <Button size="sm" variant="primary" className="shadow-none">
+              <Button size="sm" variant={isScrolled ? "primary" : "outline"} className={cn(!isScrolled && "border-white text-white hover:bg-white hover:text-neutral-900")}>
                 Client Portal
               </Button>
             </Link>
@@ -99,13 +106,13 @@ export const Navbar = () => {
           <div className="md:hidden flex items-center space-x-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors text-slate-700 dark:text-slate-300"
+              className={cn("p-2 rounded-full transition-colors", isScrolled ? "text-slate-700 dark:text-slate-300" : "text-white")}
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-700 dark:text-slate-300 hover:text-primary-600"
+              className={cn("transition-colors hover:text-primary-500", isScrolled ? "text-slate-700 dark:text-slate-300" : "text-white")}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
